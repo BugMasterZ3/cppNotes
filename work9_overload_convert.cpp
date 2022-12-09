@@ -1,3 +1,4 @@
+/*Comments added by dengmengzhao on 20221209*/
 
 
 #include <iostream>
@@ -14,46 +15,46 @@ public:
     void AddMin(int m);
     void AddHr(int h);
     void Reset(int h = 0, int m = 0);
-    Time operator+(const Time& t) const;    // = () [] -> Ö»ÄÜÍ¨¹ı³ÉÔ±º¯ÊıÖØÔØ(¶ÔÏóÊÇµÚÒ»¸ö²Ù×÷Êı)
+    Time operator+(const Time& t) const;    // = () [] -> åªèƒ½é€šè¿‡æˆå‘˜å‡½æ•°é‡è½½(å¯¹è±¡æ˜¯ç¬¬ä¸€ä¸ªæ“ä½œæ•°)
     Time operator-(const Time& t) const;
     Time operator*(double n) const;
     void Show() const;
-    friend Time operator*(double m, const Time& t)   //ÓÑÔªº¯ÊıÊ¹¶ÔÏó¿ÉÒÔ²»ÊÇµÚÒ»¸ö²Ù×÷Êı
+    friend Time operator*(double m, const Time& t)   //å‹å…ƒå‡½æ•°ä½¿å¯¹è±¡å¯ä»¥ä¸æ˜¯ç¬¬ä¸€ä¸ªæ“ä½œæ•°
     {
         return t * m;
     }
-    friend std::ostream& operator<<(std::ostream& os, const Time& t);   //ÓÑÔªº¯ÊıÖØÔØ << , Ö±½ÓÊä³ö´úÌæshow()
+    friend std::ostream& operator<<(std::ostream& os, const Time& t);   //å‹å…ƒå‡½æ•°é‡è½½ << , ç›´æ¥è¾“å‡ºä»£æ›¿show()
 };
 
-std::ostream& operator<<(std::ostream& os, const Time& t)   //¶¨Òå²»ĞèÒªfriend, osÊÇcoutµÄ±ğÃû
+std::ostream& operator<<(std::ostream& os, const Time& t)   //å®šä¹‰ä¸éœ€è¦friend, osæ˜¯coutçš„åˆ«å
 {
     os << t.hours << " hours, " << t.minutes << " minutes";
-    return os;  //·µ»Øiostream¶ÔÏó±£Ö¤Á¬ĞøÊä³ö
+    return os;  //è¿”å›iostreamå¯¹è±¡ä¿è¯è¿ç»­è¾“å‡º
 }
 
 
 class Stonewt
 {
 private:
-    enum { Lbs_per_stn = 14 };      // °õÃ¿Ó¢Ê¯ static const int ...;
+    enum { Lbs_per_stn = 14 };      // ç£…æ¯è‹±çŸ³ static const int ...;
     int stone;
-    double pds_left;                // Ê£Óà°õ   
+    double pds_left;                // å‰©ä½™ç£…   
     double pounds;
 public:
-    Stonewt(double lbs);           // ¶à¸ö¹¹Ôìº¯Êı£¬
+    Stonewt(double lbs);           // å¤šä¸ªæ„é€ å‡½æ•°ï¼Œ
     Stonewt(int stn, double lbs);
     Stonewt();
     ~Stonewt();
     void show_lbs() const;
     void show_stn() const;
-    //×ª»»º¯Êı,·µ»Øpounds(Ã»ÓĞ²ÎÊıºÍ·µ»ØÖµ£¬±ØĞëÊÇÀà·½·¨)
+    //è½¬æ¢å‡½æ•°,è¿”å›pounds(æ²¡æœ‰å‚æ•°å’Œè¿”å›å€¼ï¼Œå¿…é¡»æ˜¯ç±»æ–¹æ³•)
     operator double() const;
-    explicit operator int() const; //explicitÉùÃ÷±íÊ¾Ö»ÓÃÓÚÏÔÊ½Ç¿ÖÆÀàĞÍ×ª»»
-    // »ò int Stonewt::Stone_to_int() { return int(pounds + 0.5)}
+    explicit operator int() const; //explicitå£°æ˜è¡¨ç¤ºåªç”¨äºæ˜¾å¼å¼ºåˆ¶ç±»å‹è½¬æ¢
+    // æˆ– int Stonewt::Stone_to_int() { return int(pounds + 0.5)}
 
-    //×ª»»º¯Êı£¬ÓÑÔªº¯Êı¶şÒåĞÔÎÊÌâ
-    //³ÉÔ±º¯Êı¼ò½à³ö´íĞ¡£¬µ«ÒÀÀµÓÚÒşÊ½×ª»»£¬Ã¿´Î×ª»»»áµ÷ÓÃ×ª»»¹¹Ôìº¯Êı£¬Ôö¼ÓÊ±¼äÄÚ´æ¿ªÏú
-    //ÓÑÔªº¯Êı³ÌĞò³¤£¬µ«ÔËĞĞËÙ¶È¿ì£¬·½±ãÆ¥Åä²ÎÊıÀàĞÍ
+    //è½¬æ¢å‡½æ•°ï¼Œå‹å…ƒå‡½æ•°äºŒä¹‰æ€§é—®é¢˜
+    //æˆå‘˜å‡½æ•°ç®€æ´å‡ºé”™å°ï¼Œä½†ä¾èµ–äºéšå¼è½¬æ¢ï¼Œæ¯æ¬¡è½¬æ¢ä¼šè°ƒç”¨è½¬æ¢æ„é€ å‡½æ•°ï¼Œå¢åŠ æ—¶é—´å†…å­˜å¼€é”€
+    //å‹å…ƒå‡½æ•°ç¨‹åºé•¿ï¼Œä½†è¿è¡Œé€Ÿåº¦å¿«ï¼Œæ–¹ä¾¿åŒ¹é…å‚æ•°ç±»å‹
 };
 
 void display(const Stonewt& st, int n)
@@ -70,7 +71,7 @@ int main()
     using std::cout;
     using std::endl;
 
-    //Ê±¼ä×Ü¼Æ
+    //æ—¶é—´æ€»è®¡
     Time t1(2, 40);
     Time t2(5, 55);
     Time t3(3, 28);
@@ -83,13 +84,13 @@ int main()
     total.Show();   // 12 hours, 3 minutes 
     total = total - t3;
     total.Show();   // 8 hours, 35 minutes
-    total = total * 2;      // ²»ÄÜĞ´³É 2*diff  
+    total = total * 2;      // ä¸èƒ½å†™æˆ 2*diff  
     total.Show();// 17 hours, 10 minutes
-    total = 5.0 * t1;       //ÓÑÔª
-    cout << "5.0 * t1: " << total << endl;  // 13 hours, 20 minutes  <<ÖØÔØ
+    total = 5.0 * t1;       //å‹å…ƒ
+    cout << "5.0 * t1: " << total << endl;  // 13 hours, 20 minutes  <<é‡è½½
 
 
-    //°õ£¬Ó¢Ê¯×ª»»
+    //ç£…ï¼Œè‹±çŸ³è½¬æ¢
     Stonewt incognito = 275;
     Stonewt wolfe(285.7);    // wolfe = 285.7;
     Stonewt taft(21, 8);
@@ -97,24 +98,24 @@ int main()
     wolfe.show_stn();       // 20 stone, 5.7 pounds
     taft.show_lbs();        // 302 pounds
     incognito = 276.8;
-    taft = 325;             // taft = Stonewt(325);  int×ªdouble
+    taft = 325;             // taft = Stonewt(325);  intè½¬double
     incognito.show_stn();   // 19 stone, 10.8 pounds
     taft.show_lbs();        // 325 pounds
     display(taft, 2);       // 23 stone, 3 pounds
 
-    display(422, 2);             // 30 stone, 2 pounds   int×ªdouble-->Stonewt(double)×ªStonewt¶ÔÏó£¨ÊıÖµ×ª¶ÔÏó£©
+    display(422, 2);             // 30 stone, 2 pounds   intè½¬double-->Stonewt(double)è½¬Stonewtå¯¹è±¡ï¼ˆæ•°å€¼è½¬å¯¹è±¡ï¼‰
     Stonewt poppins(9, 2.8);     // 9 stone, 2.8 pounds
-    //cout << poppins << endl;   // Ö»¶¨ÒåÒ»ÖÖ×ª»»º¯ÊıÊ±¿ÉÒÔÍ¨¹ı±àÒë,¶àÖÖ×ª»»º¯Êı²úÉú¶şÒåĞÔ×ª»»
-    double p_wt = poppins;       // 128.8 ÒşÊ½×ª»»(½÷É÷Ê¹ÓÃ£¬ÈİÒ×³öÎÊÌâ£¬arr[poppins(14,4)])     
-    //long p_wt = poppins;       // ¶şÒåĞÔ ambiguous
-    long gone1 = (double)poppins;// 128 ÏÔÊ½×ª»»£¨Ç¿×ª£©
+    //cout << poppins << endl;   // åªå®šä¹‰ä¸€ç§è½¬æ¢å‡½æ•°æ—¶å¯ä»¥é€šè¿‡ç¼–è¯‘,å¤šç§è½¬æ¢å‡½æ•°äº§ç”ŸäºŒä¹‰æ€§è½¬æ¢
+    double p_wt = poppins;       // 128.8 éšå¼è½¬æ¢(è°¨æ…ä½¿ç”¨ï¼Œå®¹æ˜“å‡ºé—®é¢˜ï¼Œarr[poppins(14,4)])     
+    //long p_wt = poppins;       // äºŒä¹‰æ€§ ambiguous
+    long gone1 = (double)poppins;// 128 æ˜¾å¼è½¬æ¢ï¼ˆå¼ºè½¬ï¼‰
     long gone2 = int(poppins);   // 129
 
     return 0;
 }
 
 
-//Ê±¼äÀà·½·¨
+//æ—¶é—´ç±»æ–¹æ³•
 Time::Time()
 {
     hours = minutes = 0;
@@ -178,7 +179,7 @@ void Time::Show() const
     std::cout << hours << " hours, " << minutes << " minutes" << std::endl;
 }
 
-//°õÀà·½·¨
+//ç£…ç±»æ–¹æ³•
 Stonewt::Stonewt(double lbs)
 {
     stone = int(lbs) / Lbs_per_stn;    // integer division
