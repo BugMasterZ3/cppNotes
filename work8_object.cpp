@@ -68,7 +68,7 @@ int main()
 
     //对象数组
     Stock stocks[STKS] = {
-            Stock(),                    //不同构造函数初始化，未初始化默认构造函数初始化
+            Stock(),                    //不同构造函数初始化，未初始化按默认构造函数初始化
             Stock("NanoSmart", 12, 20.0),
             Stock("Fleep Enterprises", 60, 6.5)
     };
