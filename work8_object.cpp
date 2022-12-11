@@ -7,22 +7,22 @@ using namespace std;
 const int STKS = 5;
 class Stock
 {
-private:    //Ä¬ÈÏË½ÓĞ
+private:    //é»˜è®¤ç§æœ‰
     std::string company;
     long shares;    //m_shares shares_
     double share_val;
     double total_val;
     void set_tot() { total_val = shares * share_val; }
-    static const int Months = 12;   // ¶ÔÏó¹²Ïí  
+    static const int Months = 12;   // å¯¹è±¡å…±äº«  
     double costs[Months];
 public:
-    Stock();        // Ä¬ÈÏ¹¹Ôìº¯Êı»òÉèÖÃÄ¬ÈÏÖµ²ÎÊı
-    Stock(const std::string& co, long n = 0, double pr = 0.0);  //´ø²Î¹¹Ôì£¬shares,share_valÄ¬ÈÏ0
-    ~Stock();       // delete new¶ÔÏó  
-    void buy(long num, double price);   //³ÉÔ±º¯Êı¿ÉÒÔ·ÃÎÊË½ÓĞ³ÉÔ±ºÍ·½·¨
+    Stock();        // é»˜è®¤æ„é€ å‡½æ•°æˆ–è®¾ç½®é»˜è®¤å€¼å‚æ•°
+    Stock(const std::string& co, long n = 0, double pr = 0.0);  //å¸¦å‚æ„é€ ï¼Œshares,share_valé»˜è®¤0
+    ~Stock();       // delete newå¯¹è±¡  
+    void buy(long num, double price);   //æˆå‘˜å‡½æ•°å¯ä»¥è®¿é—®ç§æœ‰æˆå‘˜å’Œæ–¹æ³•
     void sell(long num, double price);
     void update(double price);
-    void show() const;  //constÈ·±£¶ÔÏó²»±»ĞŞ¸Ä void show(const Stock* this);
+    void show() const;  //constç¡®ä¿å¯¹è±¡ä¸è¢«ä¿®æ”¹ void show(const Stock* this);
     const Stock& topval(const Stock& s) const;  // *this
 };
 
@@ -31,7 +31,7 @@ typedef unsigned long Item;
 class Stack
 {
 private:
-    enum { MAX = 10 };  // ¶ÔÏóÎ´´´½¨²»ÓµÓĞ´ËÃ¶¾Ù  C++ĞÂÃ¶¾Ùenum class·ÀÖ¹Í¬×÷ÓÃÓòÃû³Æ³åÍ»
+    enum { MAX = 10 };  // å¯¹è±¡æœªåˆ›å»ºä¸æ‹¥æœ‰æ­¤æšä¸¾  C++æ–°æšä¸¾enum classé˜²æ­¢åŒä½œç”¨åŸŸåç§°å†²çª
     Item items[MAX];    // holds stack items
     int top;            // index for top stack item
 public:
@@ -45,44 +45,44 @@ public:
 
 int main()
 {
-    //Ä¬ÈÏ¹¹Ôìº¯Êı£¨ÎŞ²Î»ò½«²ÎÊıÈ«²¿ÉèÖÃÄ¬ÈÏÖµ£©
+    //é»˜è®¤æ„é€ å‡½æ•°ï¼ˆæ— å‚æˆ–å°†å‚æ•°å…¨éƒ¨è®¾ç½®é»˜è®¤å€¼ï¼‰
     //Stock s1;	
     //Stock s1{};
 
-    //´ø²Î¹¹Ôìº¯Êı³õÊ¼»¯
+    //å¸¦å‚æ„é€ å‡½æ•°åˆå§‹åŒ–
     Stock stock1("NanoSmart", 12, 20.0);
     Stock stock2 = Stock("Boffo Objects", 2, 2.0);
-    //Stock *pstock = new Stock("NanoSmart", 12, 20.0);    //¶ÔÏóÖ¸Õë
+    //Stock *pstock = new Stock("NanoSmart", 12, 20.0);    //å¯¹è±¡æŒ‡é’ˆ
     stock1.show();
     stock2.show();
-    stock2 = stock1;    //¸´ÖÆ
+    stock2 = stock1;    //å¤åˆ¶
     stock1.show();
     stock2.show();
-    stock1 = Stock("Nifty Foods", 10, 50.0);  //ĞÂµÄÁÙÊ±¶ÔÏó£¨·Ç³õÊ¼»¯£©
+    stock1 = Stock("Nifty Foods", 10, 50.0);  //æ–°çš„ä¸´æ—¶å¯¹è±¡ï¼ˆéåˆå§‹åŒ–ï¼‰
     stock1.show();
-    //ÁĞ±í³õÊ¼»¯C++11£¨Óë¹¹Ôìº¯Êı±£³ÖÒ»ÖÂ£©
+    //åˆ—è¡¨åˆå§‹åŒ–C++11ï¼ˆä¸æ„é€ å‡½æ•°ä¿æŒä¸€è‡´ï¼‰
     //Stock stock1{ "NanoSmart"};            
-    //Stock stock1 = { "NanoSmart", 12, 20.0 }; //Ò»¸ö²ÎÊıÖ±½ÓS s1 = *;  
+    //Stock stock1 = { "NanoSmart", 12, 20.0 }; //ä¸€ä¸ªå‚æ•°ç›´æ¥S s1 = *;  
     const Stock stock3{ "Tencent" };
     stock3.show();
 
-    //¶ÔÏóÊı×é
+    //å¯¹è±¡æ•°ç»„
     Stock stocks[STKS] = {
-            Stock(),                    //²»Í¬¹¹Ôìº¯Êı³õÊ¼»¯£¬Î´³õÊ¼»¯Ä¬ÈÏ¹¹Ôìº¯Êı³õÊ¼»¯
+            Stock(),                    //ä¸åŒæ„é€ å‡½æ•°åˆå§‹åŒ–ï¼Œæœªåˆå§‹åŒ–é»˜è®¤æ„é€ å‡½æ•°åˆå§‹åŒ–
             Stock("NanoSmart", 12, 20.0),
             Stock("Fleep Enterprises", 60, 6.5)
     };
-    int st;
-    for (st = 0; st < STKS; st++)
-        stocks[st].show();
+    int s;
+    for (s = 0; s < STKS; s++)
+        stocks[s].show();
     // set pointer to first element
     const Stock* top = &stocks[0];
-    for (st = 1; st < STKS; st++)
-        top = &top->topval(stocks[st]);
+    for (s = 1; s < STKS; s++)
+        top = &top->topval(stocks[s]);
     top->show();    // Company: Fleep Enterprises  Shares: 60  Share Price: $6.500  Total Worth: $390.00
 
 
-    //Ä£ÄâÕ»
+    //æ¨¡æ‹Ÿæ ˆ
     Stack st; // create an empty stack
     char ch;
     unsigned long po;
@@ -222,7 +222,7 @@ const Stock& Stock::topval(const Stock& s) const
         return *this;
 }
 
-//Õ»
+//æ ˆ
 Stack::Stack()    // create an empty stack
 {
     top = 0;
