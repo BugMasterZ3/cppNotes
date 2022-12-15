@@ -8,6 +8,7 @@ using namespace std;
 // 基类
 class TableTennisPlayer
 {
+protected: //派生类可以访问基类保护成员（与私有成员的区别）
 private:
     string firstname;
     string lastname;
@@ -64,7 +65,6 @@ const int CLIENTS = 4;
 // Brass Account Class
 class Brass
 {
-protected: //派生类可以访问基类保护成员（与私有成员的区别）
 private:
     std::string fullName;
     long acctNum;
