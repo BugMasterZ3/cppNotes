@@ -58,7 +58,7 @@ RatedPlayer::RatedPlayer(unsigned int r, const TableTennisPlayer& tp)
 2.protected 继承：	基类public，protected，private->派生类protected, protected, private
 3.private 继承：	基类public，protected，private->派生类private, private, private
 */
-
+// Abstract Base Class 抽象基类(ABC,共性,纯虚函数)
 /********/
 const int CLIENTS = 4;
 // Brass Account Class
