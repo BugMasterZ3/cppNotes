@@ -53,12 +53,18 @@ RatedPlayer::RatedPlayer(unsigned int r, const TableTennisPlayer& tp)
 {
 }
 
+/*
+1.public 继承：		基类public，protected，private->派生类public, protected, private
+2.protected 继承：	基类public，protected，private->派生类protected, protected, private
+3.private 继承：	基类public，protected，private->派生类private, private, private
+*/
 
 /********/
 const int CLIENTS = 4;
 // Brass Account Class
 class Brass
 {
+protected: //派生类可以访问基类保护成员（与私有成员的区别）
 private:
     std::string fullName;
     long acctNum;
