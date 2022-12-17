@@ -59,7 +59,33 @@ RatedPlayer::RatedPlayer(unsigned int r, const TableTennisPlayer& tp)
 2.protected 继承：	基类public，protected，private->派生类protected, protected, private
 3.private 继承：	基类public，protected，private->派生类private, private, private
 */
-// Abstract Base Class 抽象基类(ABC,共性,纯虚函数)
+/*
+// Abstract Base Class 抽象基类(ABC,共性,不能创建对象)
+class AcctABC   
+{
+private:
+    std::string fullName;
+    long acctNum;
+    double balance;
+protected:
+    struct Formatting 
+    {
+        std::ios_base::fmtflags flag;
+        std::streamsize pr;
+    };
+    const std::string & FullName() const {return fullName;}
+    long AcctNum() const {return acctNum;}
+    Formatting SetFormat() const;        //定点表示法
+    void Restore(Formatting & f) const; //重置格式和精度
+public: 
+    AcctABC(const std::string & s = "Nullbody", long an = -1, double bal = 0.0);
+    void Deposit(double amt) ;
+    virtual void Withdraw(double amt) = 0; // 纯虚函数（不用定义）
+    double Balance() const {return balance;};
+    virtual void ViewAcct() const = 0;    
+    virtual ~AcctABC() {}
+};
+*/
 /********/
 const int CLIENTS = 4;
 // Brass Account Class
