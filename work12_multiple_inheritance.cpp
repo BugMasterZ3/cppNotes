@@ -32,7 +32,7 @@ public:
     explicit Student(int n) : name("Nully"), scores(n) {}           
     Student(const std::string & s, int n) : name(s), scores(n) {}                       //n个数
     Student(const std::string & s, const ArrayDb & a) : name(s), scores(a) {}
-    Student(const char * str, const double * pd, int n) : name(str), scores(pd, n) {}   //n个数pd 
+    Student(const char * str, const double * pd, int n) : name(str), scores(pd, n) {}   //n个数pd
     ...
 };
 */
