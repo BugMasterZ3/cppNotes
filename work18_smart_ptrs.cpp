@@ -1,141 +1,13 @@
 
 
 #include <iostream>
-#include <string>
-#include <cstdlib>
-#include <ctime>
-#include <cctype>
 #include <memory>   //智能指针头文件
 #include <vector>
-
-using std::string;
-const int NUM = 8;
-const string wordlist[NUM] = {"danger", "health", "loaner", "manage", "remote", "train", "useful", "valid" };
-
+using namespace std;
 
 int main()
 {
-    using std::cout;
-    using std::cin;
-    using std::tolower;
-    using std::endl;
-
-    /**使用字符串**/
-      //赋值操作
-    string str1 = "hello world";//通过[] or at()访问/修改
-    string str2 = str1;
-    string str3 = "c";
-    string str4, str5, str6, str7;
-    str4.assign("hello c++");   
-    str5.assign("hello c++", 5);//把字符串当前n个字符赋给当前的字符串
-    str6.assign(str5);          
-    str7.assign(10, 'c');       //用n个字符c赋给当前字符串
-    //增删改查
-    string str1 = "he";
-    string str2 = " zbc";
-    str1 += "llo";      //重载+=操作符
-    str1 += str2;
-    string str3 = "You";
-    str3.append(" SB");             //追加到到当前字符串结尾
-    str3.append("hahaha hahaha", 4);//把字符串s的前n个字符连接到当前字符串的结尾
-    str3.append(str2);              //同operator+=(const string& str)
-    str3.append(str2, 0, 1);        //把字符串中从pos开始的n个字符连接到字符串结尾
-    str3.insert(1, "111");
-    str3.insert(0, 5, 'x');         //指定位置0处插入5个字符
-    str3.erase(1,3);			    //删除从1开始的3个字符
-    string& replace(int pos, int n, const string & str);//替换从pos开始n个字符为str
-    string& replace(int pos, int n, const char* s);     //替换从pos开始的n个字符为s
-    //find查找从左往右，rfind从右往左
-    int find(const string& str, int pos = 0) const;//找到返回首现首字符位置，失败返回string::npos
-    int find(const char* s, int pos = 0) const;
-    int find(const char* s, int pos, int n) const; //从pos位置查找s的前n个字符子串
-    int find(const char c, int pos = 0) const;	   
-    int rfind(const string& str, int pos = npos) const;	//查找str最后一次位置
-    int rfind(const char* s, int pos = npos) const;
-    int rfind(const char* s, int pos, int n) const;		//从pos查找s的前n个字符最后一次位置
-    int rfind(const char c, int pos = 0) const;
-    find_first_of();	//查找参数任意字符首现位置
-    find_last_of();		//参数任意字符最后出现位置
-    find_first_not_of();//查找第一个不包含在参数中的字符位置
-    find_last_not_of();
-    //获取子串
-    string email = "zhangsan@qq.com"; //从邮箱地址中获取用户名信息
-    int pos = email.find("@");
-    string usrName = email.substr(0, pos);
-    //容量大小
-    string empty;
-    string small = "bit";
-    cout << empty.size() << endl;       //0 or length()
-    cout << small.size() << endl;       //3
-    cout << empty.capacity() << endl;   //15 当前分配内存块大小
-    cout << small.capacity() << endl;   //15
-    empty.reserve(20);  //请求内存块最小长度
-    cout << empty.capacity() << endl;   //31
-    //c_str()
-    string filename;
-    ofstream fout.open(filename.c_str());   //转c风格打开文件
-	
-    /**案例：猜字母游戏**/
-    std::srand(std::time(0));
-    char play;
-    cout << "Will you play a word game? <y/n> ";
-    cin >> play;
-    play = tolower(play);
-    while (play == 'y')
-    {
-        string target = wordlist[std::rand() % NUM];
-        int length = target.length();   // or size()
-        string attempt(length, '-');
-        string badchars;
-        int guesses = 6;
-        cout << "Guess my secret word. It has " << length << " letters, and you get " << guesses << " wrong guesses.\n";
-        cout << "Your word: " << attempt << endl;
-        while (guesses > 0 && attempt != target)    // str1.compare(str2)
-        {
-            char letter;
-            cout << "Guess a letter: ";
-            cin >> letter;
-            if (badchars.find(letter) != string::npos || attempt.find(letter) != string::npos)
-            {
-                cout << "You already guessed that. Try again.\n";
-                continue;
-            }
-            int loc = target.find(letter);
-            if (loc == string::npos)
-            {
-                cout << "Oh, bad guess!\n";
-                --guesses;
-                badchars += letter; // add
-            }
-            else
-            {
-                cout << "Good guess!\n";
-                attempt[loc] = letter;
-                loc = target.find(letter, loc + 1); 
-                while (loc != string::npos) //循环查找字母是否再次出现,依次插入相应位置
-                {
-                    attempt[loc] = letter;
-                    loc = target.find(letter, loc + 1);
-                }
-            }
-            cout << "Your word: " << attempt << endl;
-            if (attempt != target)
-            {
-                if (badchars.length() > 0)
-                    cout << "Bad choices: " << badchars << endl;
-                cout << guesses << " bad guesses left\n";
-            }
-        }
-        if (guesses > 0)
-            cout << "That's right!\n";
-        else
-            cout << "Sorry, the word is " << target << ".\n";
-        cout << "Will you play another? <y/n> ";
-        cin >> play;
-        play = tolower(play);
-    }
-
-
+  
     //智能指针:自动释放new出来的内存，避免内存泄漏（delete/智能指针）
     //智能指针相互赋值解决方法：深复制，建立所有权，引用计数
     /*
@@ -185,7 +57,6 @@ int main()
     std::shared_ptr<double> p2(pd);     // ok
 
 
-    using namespace std;
     class Test {
     public:
         Test() { cout << "Test的构造函数..." << endl; }
