@@ -15,7 +15,6 @@
 // classes(显式接口+运行期多态)、templates(隐式接口+编译期多态)
 // 整合重载技术使在编译期间执行if...else测试
 // 模板元编程(结构体递归求阶乘)
-*/  
 typedef void (*new_handler)();
 new_handler set_new_handler(new handler p)	throw ();	//返回函数的函数
 
