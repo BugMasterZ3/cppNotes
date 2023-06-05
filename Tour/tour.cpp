@@ -1,5 +1,5 @@
 
-
+/*************************************易点总结**************************************/
 constexpr double square(double x) { return x * x; }
 consteval double square2(double x) { return x * x; }
     //int i2 {7.8};    // error: floating-point to integer conversion
@@ -393,3 +393,10 @@ private:
     DBConnection db;
     bool closed;
 };
+
+
+
+
+/*************************************难点总结**************************************/
+//todo:
+
