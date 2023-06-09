@@ -46,7 +46,7 @@ new_handler set_new_handler(new handler p)	throw ();	//返回函数的函数
 //当知道必须指向一个对象并且不想改变其指向时，或者在重载操作符并为防止不必要的语义误解时，不应该使用指针
 //让编译器进行隐式类型转换所造成的弊端要大于它所带来的好处，所以除非确实需要，不要定义类型转换函数
 //智能指针在捕获异常上的优越性，资源应该被封装在一个对象里，遵循这个规则通常就能避免在存在异常环境里发生资源泄漏
-//C++仅仅能删除被完全构造的对象(new操作可能没有成功完成)，用对应的智能指针对象替代指针成员变量，就可以防止构造函数在存在异常时发生资源泄漏，同时不用手工在析构函数中释放资源
+//C++仅仅能删除被完全构造的对象(new操作可能没有成功完成)
 class BookEntry { 
 public:   
 	...                                      
@@ -56,15 +56,14 @@ private:
 	const auto_ptr<AudioClip> theAudioClip;  
 };
 
-BookEntry::BookEntry(const string& name, const string& address, 
-const string& imageFileName, const string& audioClipFileName) 
+BookEntry::BookEntry(const string& name, const string& address, const string& imageFileName, const string& audioClipFileName) 
 	: theName(name), theAddress(address), 
 	theImage(mageFileName != "" ? new Image(imageFileName) : 0), 
 	theAudioClip(audioClipFileName != "" ? new AudioClip(audioClipFileName) : 0) 
 {   
 }	
 
-BookEntry::~BookEntry() {}    
+BookEntry::~BookEntry() {}    //// 用对应的智能指针对象替代指针成员变量，就可以防止构造函数在存在异常时发生资源泄漏，同时不用手工在析构函数中释放资源
 
 
 
