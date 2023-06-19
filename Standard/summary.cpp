@@ -1,8 +1,11 @@
 
 // C++历史总览：
 // C++编译器支持表：https://en.cppreference.com/w/cpp/compiler_support
-// github优质文章：https://github.com/0voice/cpp_new_features.git        （待阅读）
-                  https://github.com/chengxumiaodaren/cpp-learning.git  （待阅读）
+// 优质文章：https://github.com/0voice/cpp_new_features.git        （待阅读）
+            https://github.com/chengxumiaodaren/cpp-learning.git  
+            https://blog.csdn.net/qq_41854911/article/details/119657617
+            https://zhuanlan.zhihu.com/p/562383157    （C++23上）
+            https://zhuanlan.zhihu.com/p/562383556    （C++23下）
 // C++98是最初的C++标准，它引入了许多新的功能，包括命名空间、模板、异常处理、RTTI（运行时类型识别）等。C++98还包括了C++的基本语法和语义，如类、继承、多态、虚函数等。
 // C++03是对C++98标准的修订版，它主要是对C++98标准的一些错误和模糊之处进行了澄清和修正，没有引入新的功能。
 // C++11是C++标准的一个重大更新，它引入了许多新的功能，包括自动类型推导、Lambda表达式、右值引用、智能指针、可变参数模板等。C++11还改进了C++的性能和可移植性，包括多线程支持、原子操作、内存模型等。
@@ -14,3 +17,6 @@
 
 // 注：经过一段C++书籍的学习，学到了很多之前未接触到的知识点，但存在一个问题，每本书籍存在交集并且各有侧重点，知识学起来比较杂乱无章，故而规划该C++标准学习路线：
 // C++历史需要考虑编译器与新标准问题（支持不同步）,从C++的历史脉络出发学习(C++11开始)，以github、知乎和C站等网站的优质文章为中心，从全局上把握知识点，对于难点辅之专业书籍深入扩展。
+
+
+
