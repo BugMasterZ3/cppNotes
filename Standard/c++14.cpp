@@ -14,19 +14,6 @@
         crend
 namespace
         make_reverse_iterator(创建拥有从实参推出的类型的 std::reverse_iterator)
-<array>
-<deque>
-<forward_list>
-<iterator>
-<list>
-<map>
-<regex>
-<set>
-<span>
-<string>
-<string_view>
-<unordered_map>
-<unordered_set>
 <vector>
         begin
         cbegin          const_iterator
@@ -36,6 +23,20 @@ namespace
         cend
         rend
         crend
+
+// 主要新特性：
+// 函数返回值类型推导 
+// lambda参数auto
+// 变量模板
+// 别名模板
+// constexpr的限制放宽
+// [[deprecated]]标记（过时，废弃）
+// 二进制字面量与整形字面量分隔符
+// std::make_unique
+// std::shared_timed_mutex与std::shared_lock
+// std::integer_sequence
+// std::exchange
+// std::quoted
 
 
 ////////// 函数返回值类型推导 
