@@ -1,43 +1,5 @@
 
 /************************************************ C++ 14 ***************************************************/
-类型支持（基本类型、RTTI、类型特性）
-<type_traits>
-        std::nullptr_t
-        is_final
-<utility>
-        exchange(将实参替换为一个新值，并返回其先前值)
-        integer_sequence(实现编译时整数数列)
-<initializer_list>
-        rbegin
-        crbegin
-        rend
-        crend
-namespace
-        make_reverse_iterator(创建拥有从实参推出的类型的 std::reverse_iterator)
-<vector>
-        begin
-        cbegin          const_iterator
-        rbegin          reverse_iterator
-        crbegin         const_reverse_iterator
-        end
-        cend
-        rend
-        crend
-
-// 主要新特性：
-// 函数返回值类型推导 
-// lambda参数auto
-// 变量模板
-// 别名模板
-// constexpr的限制放宽
-// [[deprecated]]标记（过时，废弃）
-// 二进制字面量与整形字面量分隔符
-// std::make_unique
-// std::shared_timed_mutex与std::shared_lock
-// std::integer_sequence
-// std::exchange
-// std::quoted
-
 
 ////////// 函数返回值类型推导 
 auto func(int i) {      // C++11是不能通过编译的
