@@ -91,21 +91,21 @@ catch (logic_error& ex) { ... }         // 处理所有其它的logic_errors 异
 // bad_typeid	当 dynamic_cast 对空指针进行操作时，被抛出
 // bad_exception用于 unexpected 异常
 
-编译器允许调用一个函数，其抛出的异常与发出调用的函数的异常规格不一致
+//编译器允许调用一个函数，其抛出的异常与发出调用的函数的异常规格不一致
 void f2() throw(int) 
 {   
 	...   
 	f1();  // 即使 f1 可能抛出不是 int 类型的异常，这也是合法的
 	... 
 } 
-
+/*
 避免调用 unexpected 函数:
 1.模板和异常规格不要混合使用
 2.在一个函数内调用其它没有异常规格的函数时应该去除这个函数的异常规格
 3.处理系统本身抛出的异常
 
 为了使你的异常开销最小化，尽量采用不支持异常的方法编译程序，并且只有在确为异常的情况下才抛出异常
-
+*/
 
 /**效率**/
 // 惰性求值的本质——计算被推迟到实际需要值的时候
@@ -120,8 +120,90 @@ void f2() throw(int)
 // 限制某个类所能产生的对象数量(构造函数私有化)
 // 避免重载new等堆问题
 // 灵巧指针应该谨慎使用,灵巧指针的实现、理解、调试和维护需要大量的技巧; 同时灵巧指针的使用在一些领域受到极大的限制，例如测试空值、转换到dumb 指针、继承类向基类转换和对指向 const 的指针的支持
+// 了解指针引用与写时(深)拷贝(嵌套类继承引用计数类)
+template<class T>     // template class for smart pointers-to-T objects; T must inherit from RCObject  
+class RCPtr
+{                          	 	
+public:     
+	RCPtr(T* realPtr = 0) : pointee(realPtr) { init(); }
+	RCPtr(const RCPtr& rhs) : pointee(rhs.pointee) { init(); } 
+	~RCPtr() { if (pointee) pointee->removeReference(); }  
 
-	
+	RCPtr& operator=(const RCPtr& rhs)
+	{   
+		if (pointee != rhs.pointee) 
+		{     
+			if (pointee) pointee->removeReference();     
+			pointee = rhs.pointee;     
+			init();   
+		} 
+		return *this; 
+	} 
+	T* operator->() const { return pointee; }   
+	T& operator*() constt { return *pointee; }
+private:   
+	T *pointee;  
+	void init()
+	{   
+		if (pointee == 0) return;   
+		if (pointee->isShareable() == false) 
+		{     
+			pointee = new T(*pointee);   
+		} 
+  		pointee->addReference(); 
+	}
+};
+
+class RCObject 	 // base class for reference-counted objects     
+{                   
+public:    
+	void addReference() { ++refCount; }
+	void removeReference() { if (--refCount == 0) delete this; }
+	void markUnshareable() { shareable = false; } 
+	bool isShareable() const { return shareable; }
+	bool isShared() const { return refCount > 1; }
+protected:   
+	RCObject() : refCount(0), shareable(true) {}
+	RCObject(const RCObject& rhs) : refCount(0), shareable(true) {}    
+	RCObject& operator=(const RCObject& rhs) { return *this; }
+	virtual ~RCObject() {} 	// = 0; 
+private:   
+	int refCount;   
+	bool shareable;
+}; 
+
+class String 	 // class to be used by application developers 
+{                           
+public: 
+	String(const char *initValue = "") : value(new StringValue(initValue)) {}
+	const char& operator[](int index) const { return value->data[index]; } 
+	char& operator[](int index)
+	{   
+		if (value->isShared()) 
+		{     
+			value = new StringValue(value->data);   
+		}   
+		value->markUnshareable();   
+		return value->data[index]; 
+	} 
+private:  
+	// class representing string values   
+	struct StringValue: public RCObject 
+	{     
+		char *data;  
+		void init(const char *initValue)
+		{   
+			data = new char[strlen(initValue) + 1];   
+			strcpy(data, initValue); 
+		}
+		StringValue(const char *initValue) { init(initValue); }      
+		StringValue(const StringValue& rhs) { init(rhs.data); } 
+		~StringValue() { delete [] data; } 
+	};   
+	RCPtr<StringValue> value; 
+};
+
+
 
 /*****************************modern effective************************************/
 // auto无法推导出整个模板T，但可以推导出std::initializer_list<T>,
