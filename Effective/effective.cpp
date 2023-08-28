@@ -98,14 +98,13 @@ void f2() throw(int)
 	f1();  // 即使 f1 可能抛出不是 int 类型的异常，这也是合法的
 	... 
 } 
-/*
-避免调用 unexpected 函数:
-1.模板和异常规格不要混合使用
-2.在一个函数内调用其它没有异常规格的函数时应该去除这个函数的异常规格
-3.处理系统本身抛出的异常
 
-为了使你的异常开销最小化，尽量采用不支持异常的方法编译程序，并且只有在确为异常的情况下才抛出异常
-*/
+// 避免调用 unexpected 函数:
+// 	1.模板和异常规格不要混合使用
+// 	2.在一个函数内调用其它没有异常规格的函数时应该去除这个函数的异常规格
+// 	3.处理系统本身抛出的异常
+// 为了使你的异常开销最小化，尽量采用不支持异常的方法编译程序，并且只有在确为异常的情况下才抛出异常
+
 
 /**效率**/
 // 惰性求值的本质——计算被推迟到实际需要值的时候
@@ -119,8 +118,30 @@ void f2() throw(int)
 // 理解虚拟函数、多继承、虚基类和 RTTI 所需的代价
 // 限制某个类所能产生的对象数量(构造函数私有化)
 // 避免重载new等堆问题
+
 // 灵巧指针应该谨慎使用,灵巧指针的实现、理解、调试和维护需要大量的技巧; 同时灵巧指针的使用在一些领域受到极大的限制，例如测试空值、转换到dumb 指针、继承类向基类转换和对指向 const 的指针的支持
-// 了解指针引用与写时(深)拷贝(嵌套类继承引用计数类)
+// 了解指针引用与写时(深)拷贝(嵌套类继承引用计数类),总结引用计数在下列情况下对提高效率很有用：
+// 	1.少量的值被大量的对象共享。对象/值的比例越高，越是适宜使用引用计数
+// 	2.对象的值的创建和销毁代价很高昂，或它们占用大量的内存。
+// 只有一个方法来确认这些条件是否满足，这个方法是使用 profiler 或其它工具来分析发现是否创建和销毁值的行为是性能瓶颈，并能得出对象/值的比例。只有当你手里有了这些数据，你才能得出是否从引用计数上得到的好处超过其缺点
+class RCObject 	 // base class for reference-counted objects     
+{                   
+public:    
+	void addReference() { ++refCount; }
+	void removeReference() { if (--refCount == 0) delete this; }
+	void markUnshareable() { shareable = false; } 
+	bool isShareable() const { return shareable; }
+	bool isShared() const { return refCount > 1; }
+protected:   
+	RCObject() : refCount(0), shareable(true) {}
+	RCObject(const RCObject& rhs) : refCount(0), shareable(true) {}    
+	RCObject& operator=(const RCObject& rhs) { return *this; }
+	virtual ~RCObject() {} 	// = 0; 
+private:   
+	int refCount;   
+	bool shareable;
+}; 
+// 假设能够访问有关类的源码
 template<class T>     // template class for smart pointers-to-T objects; T must inherit from RCObject  
 class RCPtr
 {                          	 	
@@ -141,7 +162,7 @@ public:
 	} 
 	T* operator->() const { return pointee; }   
 	T& operator*() constt { return *pointee; }
-private:   
+private:  
 	T *pointee;  
 	void init()
 	{   
@@ -153,24 +174,6 @@ private:
   		pointee->addReference(); 
 	}
 };
-
-class RCObject 	 // base class for reference-counted objects     
-{                   
-public:    
-	void addReference() { ++refCount; }
-	void removeReference() { if (--refCount == 0) delete this; }
-	void markUnshareable() { shareable = false; } 
-	bool isShareable() const { return shareable; }
-	bool isShared() const { return refCount > 1; }
-protected:   
-	RCObject() : refCount(0), shareable(true) {}
-	RCObject(const RCObject& rhs) : refCount(0), shareable(true) {}    
-	RCObject& operator=(const RCObject& rhs) { return *this; }
-	virtual ~RCObject() {} 	// = 0; 
-private:   
-	int refCount;   
-	bool shareable;
-}; 
 
 class String 	 // class to be used by application developers 
 {                           
@@ -202,7 +205,81 @@ private:
 	};   
 	RCPtr<StringValue> value; 
 };
+// 在现存类上增加引用计数(将引用计数加到任意类型上)
+template<class T>     // template class for smart pointers-to-T objects; T must inherit from RCObject  
+class RCIPtr
+{                          	 	
+public:     
+	RCIPtr(T* realPtr = 0) :counter(new CountHolder) {   counter->pointee = realPtr; init(); }
+	RCIPtr(const RCPtr& rhs) : counter(rhs.counter)  { init(); } 
+	~RCIPtr() { counter->removeReference(); }  
 
+	RCIPtr& operator=(const RCIPtr& rhs)
+	{   
+		if (counter != rhs.counter) 
+		{     
+			counter->removeReference();     
+			counter = rhs.counter;     
+			init();  
+		}
+		return *this; 
+	} 
+	const T* operator->() const { return counter->pointee; }   
+	T* operator->() { makeCopy(); return counter->pointee; }
+	const T& operator*() const { return *(counter->pointee); }
+	T& operator*() { makeCopy(); return *(counter->pointee); }
+private:  
+	struct CountHolder: public RCObject
+	{     
+		~CountHolder() { delete pointee; }     
+		T *pointee;  
+	};
+
+	CountHolder *counter;
+
+	void init()
+	{   
+		if (counter->isShareable() == false) 
+		{    
+			T *oldValue = counter->pointee;     
+			counter = new CountHolder;     
+			counter->pointee = new T(*oldValue);   
+		}   
+		counter->addReference();
+	}
+	void makeCopy()
+	{                                
+		if (counter->isShared()) 
+		{     
+			T *oldValue = counter->pointee;     
+			counter->removeReference();     
+			counter = new CountHolder;     
+			counter->pointee = new T(*oldValue);     
+			counter->addReference();  
+		} 
+	}
+};
+
+class Widget 
+{ 
+public:  
+	Widget(int size);   
+	Widget(const Widget& rhs);   
+	~Widget(); 
+
+	Widget& operator=(const Widget& rhs);   
+	void doThis();   
+	int showThat() const; 
+};
+class RCWidget 
+{ 
+public:   
+	RCWidget(int size): value(new Widget(size)) {}   
+	void doThis() { value->doThis(); }   
+	int showThat() const { return value->showThat(); } 
+private:   
+	RCIPtr<Widget> value; 
+}; 
 
 
 /*****************************modern effective************************************/
