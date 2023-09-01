@@ -1,5 +1,9 @@
 
 // 第1章，关于对象(Object Lessons)
+// C++在布局以及存取时间上主要的额外负担是由virtual引起
+// 如果struct关键词的使用实现了C的数据萃取观念，而class关键词实现的是C++的ADT观念（封装继承哲学,组合composition struct）
+// 只有通过pointer或reference的间接处理，才支持OO程序设计所需的多态性质
+// 多态的主要用途是经由一个共同的接口来影响类型的封装，这个接口通常被定义在一个抽象的base class中
 
 // 第2章，构造函数语意学(The Semantics of Constructors)
 
