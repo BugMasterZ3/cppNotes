@@ -4,8 +4,7 @@
 // 如果struct关键词的使用实现了C的数据萃取观念，而class关键词实现的是C++的ADT观念（封装继承哲学,组合composition struct）
 // 只有通过pointer或reference的间接处理，才支持OO程序设计所需的多态性质
 // 多态的主要用途是经由一个共同的接口来影响类型的封装，这个接口通常被定义在一个抽象的base class中
-// 补充扩展：Curiously Recurring Template Pattern (CRTP)
-  // 用于实现编译时多态性，此模式允许创建静态多态性，与依赖虚拟函数和继承的常规运行时多态性不同,不增加虚拟函数调用的开销,无需运行时性能成本
+// 补充扩展：Curiously Recurring Template Pattern (CRTP)：用于实现编译时多态性，此模式允许创建静态多态性，与依赖虚拟函数和继承的常规运行时多态性不同,不增加虚拟函数调用的开销,无需运行时性能成本
   template <typename Derived>
   class Base 
   {
@@ -27,6 +26,18 @@
 
 
 // 第2章，构造函数语意学(The Semantics of Constructors)
+// nontrivial （implicit） default constructor
+  // 带有Default Constructor的Member Class Object（编译器会安插码，自动扩张操作已存在的成员类的constructors，但所有其它的nonstatic data member不会被初始化）
+  // 带有Default Constructor的Base Class
+  // 带有一个Virtual Function的Class
+  // 带有一个Virtual Base Class的Class
+// Copy constructor(Default Memberwise Initialization)
+// 不展现/失效的Bitwise Copy Semantics（位逐次拷贝，直接简单复制创建副本）
+  // 当内含一个带有copy constructor的Member Object时，编译器会合成一个default copy constructors，并且所有其它的nonclass members也都会被复制
+  // 当class继承自一个带有copy constructor的base class时(不论是被明确声明或是被合成而得)
+  // 当class声明了一个或多个virtual functions时（切割问题）
+  // 当class派生自一个继承串链，其中有一个或多个virtual base classes时（多态问题）
+
 
 // 第3章，Data语意学(The Semantics of Data)
 
