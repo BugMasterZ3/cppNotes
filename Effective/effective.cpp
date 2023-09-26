@@ -285,8 +285,19 @@ private:
 /** 杂项 **/
 // 未来时态的考虑增加了你的代码的可重用性、可维护性、健壮性，已及在环境发生改变时易于修改，它必须与进行时态的约束条件进行取舍
 // 将非尾端类设计为抽象类
-// 同一程序中混合使用 C++和 C： 禁止名变换（extern "C" {...}），静态初始化，内存动态分配，数据结构兼容
-
+// 同一程序中混合使用 C++和 C： 禁止名变换(extern "C" {...}); 静态初始化; 内存动态分配(new--delete-,malloc--free); 数据结构兼容(基类、虚函数)
+	// 指导原则： 
+	// 确保 C++和 C 编译器产生兼容的 obj 文件
+	// 将在两种语言下都使用的函数申明为 extern 'C'
+	// 只要可能，用 C++写 main()
+	// 总用 delete 释放 new 分配的内存；总用 free 释放 malloc 分配的内存
+	// 将在两种语言间传递的东西限制在用 C 编译的数据结构的范围内；这些结构的 C++版本可以包含非虚成员函数
+template<class Iterator, class T> 
+Iterator find(Iterator begin, Iterator end, const T& value) 
+{   
+	while (begin != end && *begin != value) ++begin;  
+	return begin; 
+} 
 
 
 /*****************************modern effective************************************/
