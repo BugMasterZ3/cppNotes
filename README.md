@@ -3,8 +3,8 @@
 | 参考链接列表：                                               |
 | ------------------------------------------------------------ |
 | [C++ compiler supports](https://en.cppreference.com/w/cpp/compiler_support) |
-| [cpp_new_features](https://github.com/0voice/cpp_new_features.git) |
-| [cpp-learning](https://github.com/chengxumiaodaren/cpp-learning.git ) |
+| [Github：cpp_new_features](https://github.com/0voice/cpp_new_features.git) |
+| [Github：cpp-learning](https://github.com/chengxumiaodaren/cpp-learning.git ) |
 | [CSDN](https://blog.csdn.net/qq_41854911/article/details/119657617 ) |
 | [知乎C++11](https://zhuanlan.zhihu.com/p/139515439)          |
 | [知乎C++14](https://zhuanlan.zhihu.com/p/165389083 )         |
