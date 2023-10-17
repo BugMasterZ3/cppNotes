@@ -21,6 +21,8 @@
 ### ![image](https://github.com/BugMasterZ3/cppNotes/assets/113817074/8965aac6-9bdf-46a3-b849-031c540eec36)
 ### ![image](https://github.com/BugMasterZ3/cppNotes/assets/113817074/d492b0c5-18f7-447e-a1a2-dc2bf34abf1f)
 ### ![image](https://github.com/BugMasterZ3/cppNotes/assets/113817074/b4abb971-89dd-4e9c-90e0-723475a25dd0)
-
-
+## 浮点数
++ 二进制小数点向左移动一位相当于除以2，二进制小数点向右移动一位相当于将这数乘2
++ 增加二进制表示的长度可以提高表示的精度
+### ![image](https://github.com/BugMasterZ3/cppNotes/assets/113817074/934b3d8b-34c2-4873-a8bb-e93564de855c)
 
