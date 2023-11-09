@@ -40,7 +40,7 @@ template <typename Derived>
 
 # 第3章，Data语意学(The Semantics of Data)
 + 把一个clss分解为两层或更多层继承关系，有可能会为了表现class体系之抽象化而膨胀所需空间（alignment）
-+ 多重继承的非自然关系（改用虚拟继承、虚基类解决这个问题）
++ 多重继承的非自然关系（改用虚拟继承、虚基类解决这个问题）,编译器总是把vptr放在对象头部或尾部
 ```
 class Point3d ：public Point2d{ //... }
 class Vertex3d : pub1ic Point3d, public Vertex{ //... }
@@ -63,6 +63,16 @@ pv = pv3d;  // 虚拟C++码 pv = pv3d ? (Vertex*)((char*)pv3d)+sizeof(Point3d) :
 ```
 
 # 第4章，Function语意学(The Semantics of Function)
++ C++的设计准则之一：nonstatic member function至少必须和一般的nonmember function有相同的效率（实际上member function会安插额外参数this指针被内化为nonmember的形式）
++ 明确的调用操作(explicit1y invocation)会压制虚拟机制,声明为inline函数会更有效率
+```
+register float mag = Point3d:magnitude();
+```
++ Static member functions的主要特性就是它没有this指针。以下的次要特性统统根源于其主要特性：
+  + 不能够直接存取其class中的nonstatic members
+  + 不能够被声明为const、volatile或virtual
+  + 不需要经由class object才被调用——虽然大部分时候它是这样被调用的
+
 
 # 第5章，构造、解构、拷贝语意学(Semantics of Construction,Destruction,and Copy)
 
