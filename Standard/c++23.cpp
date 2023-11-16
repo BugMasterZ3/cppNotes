@@ -90,7 +90,8 @@ Source&& process() { Source s; return s; } // error!
 Sink process(Source&& s) { return s; }     // okay
 Source&& process(Source&& s) { return s; } // error!
 
-// 确定性的定义顺序：灵活性太高也是一件坏事
+// 确定性的定义顺序：以前标准仍然没有对不同访问级别的变量之间的布局顺序做出任何规定，现在流行的编译器都会严格按照定义顺序来布局成员变量（成员变量没有自由度，但没有规定父类）
+
 // CTAD增强：继承构造函数的缺憾
 // 重要的CWG Issue
 
