@@ -105,6 +105,9 @@ Source&& process(Source&& s) { return s; } // error!
 // 标准库 - T1
 // std::print：新时代的输出手段
 // Ranges格式化输出：cout的缺憾
+std::println("=={:<15}==", std::vector{1, 2, 3});  // ==[1, 2, 3]      ==  行宽15左对齐  
+std::println("=={:*^15}==", std::vector{1, 2, 3}); // ==***[1, 2, 3]***==  行宽15居中，用*填充 
+
 // std::expected：新时代的异常处理方式
 // std::generator：Coroutines ?? Ranges
 // ranges::to & 容器Ranges支持：补全C++20 Ranges的最大缺憾
